@@ -32,7 +32,11 @@ test('test runs', () => {
   process.env['INPUT_SOURCE-DIR'] = srcDir
   const ip = path.join(__dirname, 'lib', 'main.js')
   const options: cp.ExecSyncOptions = {
-    env: process.env
+    env: process.env,
+    stdio: 'inherit'
   }
-  console.log(cp.execSync(`node ${ip}`, options).toString())
+  let spawnProc = cp.spawn(`node ${ip}`, options)
+  spawnProc.on('close', (code) => {
+    console.log(`Action exited with code ${code}`);
+  });
 })
