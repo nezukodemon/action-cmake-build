@@ -11,19 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - run: |
-        npm install
-        npm run all
+    - run: npm install
+    - run: npm run build
+    - run: ls -lh lib
+    - run: npm test
 
-  action-test:
-    name: Action Test
-    runs-on: ${{ matrix.operating-system }}
-    strategy:
-      matrix:
-        operating-system: [ubuntu-latest, windows-latest, macos-latest]
-    steps:
-    - uses: actions/checkout@v1
-    - name: Run Action
-      uses: ./
-      with:
-        source-dir: test/DemoProject
+  
