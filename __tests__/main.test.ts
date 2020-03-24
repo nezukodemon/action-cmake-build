@@ -28,8 +28,8 @@ test('test runs', () => {
   // Clean Build dir
   io.rmRF(buildDir)
   // cd into source dir
-  process.env['INPUT_BUILD-DIR'] = buildDir
-  process.env['INPUT_SOURCE-DIR'] = srcDir
+//   process.env['INPUT_BUILD-DIR'] = buildDir
+//   process.env['INPUT_SOURCE-DIR'] = srcDir
   const ip = path.join(__dirname, '..', 'lib', 'main.js')
   const options: cp.ExecSyncOptions = {
     env: process.env,
@@ -37,6 +37,8 @@ test('test runs', () => {
   }
   let spawnProc = cp.spawn(`node`, [ip], options)
   spawnProc.on('close', (code) => {
-    console.log(`Action exited with code ${code}`);
+    if (code !== 0) {
+      throw Error(`Action exited with code ${code}`)
+    }
   });
 })
